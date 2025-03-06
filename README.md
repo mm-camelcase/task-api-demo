@@ -47,6 +47,9 @@ docker run --rm -v ${PWD}:/local -u $(id -u):$(id -g) openapitools/openapi-gener
 ✅ **Prevents `README.md` from being overwritten** (if `.openapi-generator-ignore` is set).  
 ✅ **Ensures files are owned by your user, not root.**  
 
+#### **Why `interfaceOnly=true`?**
+Setting `interfaceOnly=true` ensures that only **API interfaces and DTOs** are generated, allowing you to manually implement controller logic. This keeps business logic separate and prevents generated code from overwriting custom implementations.
+
 ### **Will Keeping `task-api-spec.yaml` in the Root Affect Swagger?**
 No, Swagger will still work correctly as long as the application is configured to load the OpenAPI definition dynamically. To ensure Swagger UI can access the spec, add the following to `application.yml`:
 ```yaml

@@ -37,16 +37,19 @@ echo "README.md" > .openapi-generator-ignore
 #### **Step 3: Run OpenAPI Generator as Your User (Avoid Root Ownership)**
 To ensure generated files are owned by your local user and not root, use:
 ```sh
-
-PACKAGE_NAME=com.camelcase.taskapi
+PROJECT_NAME=taskapi
+PACKAGE_NAME=com.camelcase
 
 docker run --rm -v ${PWD}:/local -u $(id -u):$(id -g) openapitools/openapi-generator-cli generate \
   -i /local/task-api-spec.yaml \
   -g spring \
   -o /local \
   --additional-properties=library=spring-boot,useSpringBoot3=true,java17=true,dateLibrary=java8,buildTool=gradle,interfaceOnly=true \
-  --api-package=${PACKAGE_NAME} \
-  --model-package=${PACKAGE_NAME}.model
+  --api-package=${PACKAGE_NAME}.${PROJECT_NAME} \
+  --model-package=${PACKAGE_NAME}.${PROJECT_NAME}.model \
+  --group-id=${PACKAGE_NAME} \
+  --artifact-id=${PROJECT_NAME} \
+  --package-name=${PROJECT_NAME}
 ```
 ✅ **Keeps `task-api-spec.yaml` in the project root.**  
 ✅ **Prevents `README.md` from being overwritten** (if `.openapi-generator-ignore` is set).  

@@ -44,7 +44,7 @@ docker run --rm -v ${PWD}:/local -u $(id -u):$(id -g) openapitools/openapi-gener
   -i /local/task-api-spec.yaml \
   -g spring \
   -o /local \
-  --additional-properties=library=spring-boot,useSpringBoot3=true,java17=true,dateLibrary=java8,interfaceOnly=true \
+  --additional-properties=library=spring-boot,useSpringBoot3=true,java17=true,dateLibrary=java8,buildTool=gradle,interfaceOnly=true \
   --api-package=${PACKAGE_NAME} \
   --model-package=${PACKAGE_NAME}.model
 ```

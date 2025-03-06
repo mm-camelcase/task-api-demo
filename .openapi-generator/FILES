@@ -1,8 +1,0 @@
-pom.xml
-src/main/java/com/camelcase/taskapi/ApiUtil.java
-src/main/java/com/camelcase/taskapi/TasksApi.java
-src/main/java/com/camelcase/taskapi/model/ErrorResponse.java
-src/main/java/com/camelcase/taskapi/model/Task.java
-src/main/java/com/camelcase/taskapi/model/TaskCreateRequest.java
-src/main/java/com/camelcase/taskapi/model/TaskPage.java
-src/main/java/com/camelcase/taskapi/model/TaskUpdateRequest.java

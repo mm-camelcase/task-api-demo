@@ -41,7 +41,9 @@ docker run --rm -v ${PWD}:/local -u $(id -u):$(id -g) openapitools/openapi-gener
   -i /local/task-api-spec.yaml \
   -g spring \
   -o /local \
-  --additional-properties=library=spring-boot,useSpringBoot3=true,java17=true,dateLibrary=java8,interfaceOnly=true
+  --additional-properties=library=spring-boot,useSpringBoot3=true,java17=true,dateLibrary=java8,interfaceOnly=true \
+  --api-package=com.camelcase.taskapi \
+  --model-package=com.camelcase.taskapi.model
 ```
 ✅ **Keeps `task-api-spec.yaml` in the project root.**  
 ✅ **Prevents `README.md` from being overwritten** (if `.openapi-generator-ignore` is set).  
@@ -49,18 +51,6 @@ docker run --rm -v ${PWD}:/local -u $(id -u):$(id -g) openapitools/openapi-gener
 
 #### **Why `interfaceOnly=true`?**
 Setting `interfaceOnly=true` ensures that only **API interfaces and DTOs** are generated, allowing you to manually implement controller logic. This keeps business logic separate and prevents generated code from overwriting custom implementations.
-
-### **Will Keeping `task-api-spec.yaml` in the Root Affect Swagger?**
-No, Swagger will still work correctly as long as the application is configured to load the OpenAPI definition dynamically. To ensure Swagger UI can access the spec, add the following to `application.yml`:
-```yaml
-springdoc:
-  api-docs:
-    path: /v3/api-docs
-  swagger-ui:
-    url: /task-api-spec.yaml  # Load spec from root
-    path: /swagger-ui.html
-```
-Now, Swagger UI will correctly display the API documentation.
 
 ### **3️⃣ Implement Business Logic & Services**
 - A **service layer** was added for clean separation of concerns.

@@ -142,20 +142,3 @@ query {
 }
 ```
 
-## 🛠️ Development & Contribution
-1️⃣ **Fork the repo & create a new branch**
-```sh
-git checkout -b feature-branch
-```
-2️⃣ **Commit changes & push to GitHub**
-```sh
-git commit -m "Added new feature"
-git push origin feature-branch
-```
-3️⃣ **Create a Pull Request!**
-
-## 📜 License
-This project is licensed under the MIT License.
-
----
-🚀 **Happy Coding!** Contributions & feedback are welcome! 😊

@@ -16,16 +16,15 @@ This project follows an **API-first** approach, where the API specification was 
 
 ### **1️⃣ Define OpenAPI Specification**
 - The API was designed using **OpenAPI 3.0**.
-- The spec was created in `task-api-spec.yaml`.
+- The spec was created in the **root of the project** as `task-api-spec.yaml`.
 - OpenAPI defines endpoints, request/response structures, and validation rules.
 
 ### **2️⃣ Auto-Generate Code Using OpenAPI Generator**
 
 #### **Step 1: Ensure the OpenAPI Spec Exists**
-Before running OpenAPI Generator, create the necessary directory and spec file:
+Before running OpenAPI Generator, ensure `task-api-spec.yaml` is present in the **root directory**:
 ```sh
-mkdir -p src/main/resources/openapi
-touch src/main/resources/openapi/task-api-spec.yaml
+touch task-api-spec.yaml
 ```
 Then **add your OpenAPI YAML content** inside `task-api-spec.yaml`.
 
@@ -41,11 +40,24 @@ To ensure generated files are owned by your local user and not root, use:
 docker run --rm -v ${PWD}:/local -u $(id -u):$(id -g) openapitools/openapi-generator-cli generate \
   -i /local/task-api-spec.yaml \
   -g spring \
-  -o /local \
+  -o /local/generated-task-api \
   --additional-properties=library=spring-boot,useSpringBoot3=true,java17=true,dateLibrary=java8,interfaceOnly=true
 ```
-✅ **`-u $(id -u):$(id -g)`** ensures files are owned by your user.
-✅ **`.openapi-generator-ignore`** prevents overwriting `README.md`.
+✅ **Keeps `task-api-spec.yaml` in the project root.**  
+✅ **Prevents `README.md` from being overwritten** (if `.openapi-generator-ignore` is set).  
+✅ **Ensures files are owned by your user, not root.**  
+
+### **Will Keeping `task-api-spec.yaml` in the Root Affect Swagger?**
+No, Swagger will still work correctly as long as the application is configured to load the OpenAPI definition dynamically. To ensure Swagger UI can access the spec, add the following to `application.yml`:
+```yaml
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    url: /task-api-spec.yaml  # Load spec from root
+    path: /swagger-ui.html
+```
+Now, Swagger UI will correctly display the API documentation.
 
 ### **3️⃣ Implement Business Logic & Services**
 - A **service layer** was added for clean separation of concerns.

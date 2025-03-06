@@ -40,7 +40,7 @@ To ensure generated files are owned by your local user and not root, use:
 docker run --rm -v ${PWD}:/local -u $(id -u):$(id -g) openapitools/openapi-generator-cli generate \
   -i /local/task-api-spec.yaml \
   -g spring \
-  -o /local/generated-task-api \
+  -o /local \
   --additional-properties=library=spring-boot,useSpringBoot3=true,java17=true,dateLibrary=java8,interfaceOnly=true
 ```
 ✅ **Keeps `task-api-spec.yaml` in the project root.**  

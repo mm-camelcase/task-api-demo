@@ -13,11 +13,15 @@
 
 ## 🏗️ How It Was Built
 This project follows an **API-first** approach, where the API specification was defined first, and the code was auto-generated.
-
 ### **1️⃣ Define OpenAPI Specification**
+- The API was designed using **OpenAPI 3.0**.
+- The specification was created and edited using [Swagger Editor](https://editor.swagger.io/).
+- The spec was created in the **root of the project** as `task-api-spec.yaml`.
+- OpenAPI defines endpoints, request/response structures, and validation rules.
 - The API was designed using **OpenAPI 3.0**.
 - The spec was created in the **root of the project** as `task-api-spec.yaml`.
 - OpenAPI defines endpoints, request/response structures, and validation rules.
+
 
 ### **2️⃣ Auto-Generate Code Using OpenAPI Generator**
 

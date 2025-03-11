@@ -178,6 +178,8 @@ Example Response:
 }
 ```
 
+- TODO: mention auth swagger integration etc.
+
 ### **Use Token in API Requests**
 Include the token in the `Authorization` header:
 ```sh

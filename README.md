@@ -161,12 +161,15 @@ This project includes **multiple API documentation tools** to provide flexibilit
 - **Need professional-looking static docs?** → Use **ReDoc**.
 - **Want a customizable solution?** → Use **RapiDoc** or **Stoplight Elements**.
 
-🚀 **Try each documentation tool and choose the one that fits your workflow!** 🚀
 
 ---
 
 
 ## 🔑 Authentication & Token Retrieval
+
+- For this demo, authentication is handled via a **local auth endpoint** that issues tokens using the **OAuth2 Password Flow**.
+- In a **production environment**, authentication would typically use the **Authorization Code Flow** with an external **OAuth2 provider** such as **Keycloak**, **Okta**, or **AWS Cognito**, ensuring enhanced security and proper identity federation.
+
 ### **Login to Get a Token**
 ```sh
 curl -X POST "http://localhost:8080/auth/login?username=admin&password=password"
@@ -174,11 +177,12 @@ curl -X POST "http://localhost:8080/auth/login?username=admin&password=password"
 Example Response:
 ```json
 {
-  "token": "your-jwt-token"
+  "access_token": "your-jwt-token",
+  "expires_in":"3600",
+  "token_type":"Bearer"
 }
 ```
 
-- TODO: mention auth swagger integration etc.
 
 ### **Use Token in API Requests**
 Include the token in the `Authorization` header:
@@ -186,12 +190,12 @@ Include the token in the `Authorization` header:
 curl -X GET "http://localhost:8080/tasks" -H "Authorization: Bearer your-jwt-token"
 ```
 
-## 📘 API Documentation
-### **Swagger UI (REST API Docs)**
-After starting the application, visit:
-```
-http://localhost:8080/swagger-ui.html
-```
+### **Authentication in API Docs)**
+
+
+
+**📸 Screenshot:**  
+![RapiDoc Screenshot](./assets/images/docauth.png)
 
 ### **GraphQL Playground**
 Query tasks via GraphQL:

@@ -211,3 +211,7 @@ query {
 }
 ```
 
+
+### TODO
+
+- GraphQL in swagger etc.

@@ -104,6 +104,68 @@ docker build -t task-api-demo .
 docker run -p 8080:8080 task-api-demo
 ```
 
+## 📖 API Documentation
+This project includes **multiple API documentation tools** to provide flexibility in exploring and testing the API.
+
+| **Documentation Tool**  | **Usage** | **Supports Try It Out?** | **Authentication Support** | **Customization** |
+|-------------------------|----------|-----------------|--------------------|----------------|
+| **Swagger UI**          | API testing + Docs | ✅ Yes | ✅ OAuth2, Basic, API Key | Moderate |
+| **ReDoc**               | Clean API Docs | ❌ No | ❌ No built-in auth | High |
+| **Stoplight Elements**  | Interactive Docs + Testing | ✅ Yes | ✅ OAuth2, Basic, API Key | High |
+| **RapiDoc**             | Customizable API Docs | ✅ Yes | ✅ OAuth2, Basic, API Key | High |
+
+---
+
+### **1️⃣ Swagger UI**
+📌 **Best for:** Developers who want **"Try It Out"** functionality.  
+🔗 **Access:** [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)  
+✅ **Supports API testing, OAuth2, Basic Auth, and API Key authentication**.
+
+**📸 Screenshot:**  
+![Swagger UI Screenshot](./screenshots/swagger-ui.png)
+
+---
+
+### **2️⃣ ReDoc**
+📌 **Best for:** Clean, professional API documentation without interactive testing.  
+🔗 **Access:** [http://localhost:8080/redoc](http://localhost:8080/redoc)  
+❌ **No "Try It Out" feature** – for **viewing API specs only**.
+
+**📸 Screenshot:**  
+![ReDoc Screenshot](./screenshots/redoc.png)
+
+---
+
+### **3️⃣ Stoplight Elements**
+📌 **Best for:** Interactive API documentation with testing and authentication.  
+🔗 **Access:** [http://localhost:8080/stoplight](http://localhost:8080/stoplight)  
+✅ **Supports OAuth2, Basic Auth, and interactive API testing**.
+
+**📸 Screenshot:**  
+![Stoplight Elements Screenshot](./screenshots/stoplight-elements.png)
+
+---
+
+### **4️⃣ RapiDoc**
+📌 **Best for:** Highly customizable API documentation with interactive testing.  
+🔗 **Access:** [http://localhost:8080/rapidoc](http://localhost:8080/rapidoc)  
+✅ **Supports API testing and authentication with custom themes**.
+
+**📸 Screenshot:**  
+![RapiDoc Screenshot](./screenshots/rapidoc.png)
+
+---
+
+## **How to Choose the Right API Documentation Tool?**
+- **Need API testing?** → Use **Swagger UI**, **Stoplight Elements**, or **RapiDoc**.
+- **Need professional-looking static docs?** → Use **ReDoc**.
+- **Want a customizable solution?** → Use **RapiDoc** or **Stoplight Elements**.
+
+🚀 **Try each documentation tool and choose the one that fits your workflow!** 🚀
+
+---
+
+
 ## 🔑 Authentication & Token Retrieval
 ### **Login to Get a Token**
 ```sh

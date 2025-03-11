@@ -122,7 +122,7 @@ This project includes **multiple API documentation tools** to provide flexibilit
 ✅ **Supports API testing, OAuth2, Basic Auth, and API Key authentication**.
 
 **📸 Screenshot:**  
-![Swagger UI Screenshot](./screenshots/swagger-ui.png)
+![Swagger UI Screenshot](./assets/images/swaggerui.png)
 
 ---
 
@@ -132,7 +132,7 @@ This project includes **multiple API documentation tools** to provide flexibilit
 ❌ **No "Try It Out" feature** – for **viewing API specs only**.
 
 **📸 Screenshot:**  
-![ReDoc Screenshot](./screenshots/redoc.png)
+![ReDoc Screenshot](./assets/images/redoc.png)
 
 ---
 
@@ -142,7 +142,7 @@ This project includes **multiple API documentation tools** to provide flexibilit
 ✅ **Supports OAuth2, Basic Auth, and interactive API testing**.
 
 **📸 Screenshot:**  
-![Stoplight Elements Screenshot](./screenshots/stoplight-elements.png)
+![Stoplight Elements Screenshot](./assets/images/stoplight-elements.png)
 
 ---
 
@@ -152,7 +152,7 @@ This project includes **multiple API documentation tools** to provide flexibilit
 ✅ **Supports API testing and authentication with custom themes**.
 
 **📸 Screenshot:**  
-![RapiDoc Screenshot](./screenshots/rapidoc.png)
+![RapiDoc Screenshot](./assets/images/rapidoc.png)
 
 ---
 

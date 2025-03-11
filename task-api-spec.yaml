@@ -3,6 +3,11 @@ info:
   title: Task Management API
   description: A fully featured API for managing tasks with REST and GraphQL support.
   version: 1.0.0
+
+
+security:
+  - OAuth2: []
+
 servers:
   - url: https://api.example.com
     description: Production Server
@@ -13,6 +18,7 @@ paths:
   /tasks:
     get:
       summary: Get all tasks
+      operationId: findAll
       description: Retrieve a paginated list of all tasks with optional filters.
       parameters:
         - name: status
@@ -42,6 +48,7 @@ paths:
                 $ref: '#/components/schemas/TaskPage'
     post:
       summary: Create a new task
+      operationId: create
       description: Add a new task to the system.
       requestBody:
         required: true
@@ -66,6 +73,7 @@ paths:
   /tasks/{id}:
     get:
       summary: Get a specific task
+      operationId: get
       description: Retrieve details of a task by its ID.
       parameters:
         - name: id
@@ -89,6 +97,7 @@ paths:
     put:
       summary: Update a task
       description: Modify an existing task.
+      operationId: update
       parameters:
         - name: id
           in: path
@@ -104,15 +113,26 @@ paths:
       responses:
         '200':
           description: Task updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
         '400':
           description: Validation error.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Task not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
     delete:
       summary: Delete a task
-      description: Remove a task by its ID.
+      operationId: delete
+      description: Permanently remove a task by its ID (hard delete).
       parameters:
         - name: id
           in: path
@@ -130,6 +150,13 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 
 components:
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: " http://localhost:8080/api/auth/login"  # Replace with your token endpoint
+          scopes: {}
   schemas:
     Task:
       type: object

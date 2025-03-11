@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReDoc</title>
+    <script src="https://cdn.jsdelivr.net/npm/redoc@next/bundles/redoc.standalone.js"></script>
+</head>
+<body>
+    <div id="redoc-container"></div> <!-- Use div instead of <redoc> -->
+    
+    <script>
+        Redoc.init('/v3/api-docs', {}, document.getElementById('redoc-container'));
+    </script>
+    
+</body>
+</html>

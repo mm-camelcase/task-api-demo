@@ -1,0 +1,101 @@
+package com.camelcase.taskapi.controller;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.camelcase.taskapi.dto.AuthRequest;
+import com.camelcase.taskapi.filter.RequestLoggingFilter;
+import com.camelcase.taskapi.security.JwtUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
+
+@RestController
+@RequestMapping("/api/auth")
+public class AuthController {
+
+    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
+
+    private final AuthenticationManager authenticationManager;
+    private final JwtUtil jwtUtil;
+    private final UserDetailsService userDetailsService;
+
+    public AuthController(AuthenticationManager authenticationManager, JwtUtil jwtUtil, UserDetailsService userDetailsService) {
+        this.authenticationManager = authenticationManager;
+        this.jwtUtil = jwtUtil;
+        this.userDetailsService = userDetailsService;
+    }
+
+    // @PostMapping("/login")
+    // public Map<String, String> login(@RequestBody AuthRequest authRequest) {
+    //     authenticationManager.authenticate(
+    //             new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
+    //     );
+
+    //     String token = jwtUtil.generateToken(authRequest.getUsername());
+
+    //     return Map.of("token", token);
+    // }
+
+    @PostMapping("/login")
+    public Map<String, String> login(@Valid @RequestBody AuthRequest authRequest) {
+        logger.info("🔑 Login Attempt - Username: {}", authRequest);
+
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
+        );
+
+        String token = jwtUtil.generateToken(authRequest.getUsername());
+        return Map.of("token", token);
+    }
+
+    // @PostMapping("/login")
+    // public Map<String, String> login(@RequestBody String rawJson) {
+    //     System.out.println("Raw JSON received: " + rawJson);  // Debug raw JSON
+        
+    //     ObjectMapper objectMapper = new ObjectMapper();
+    //     try {
+    //         AuthRequest authRequest = objectMapper.readValue(rawJson, AuthRequest.class);
+    //         System.out.println("Deserialized AuthRequest: " + authRequest);
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //     }
+
+    //     return Map.of("error", "Check server logs");
+    // }
+
+    // @PostMapping(value = "/login", consumes = "application/json")
+    // public Map<String, String> login(@RequestBody(required = false) String rawJson, @RequestHeader(value = "Content-Type", required = false) String contentType) {
+    //     System.out.println("Received Content-Type: " + contentType);
+    //     System.out.println("Raw JSON received: " + rawJson);
+        
+    //     return Map.of("message", "Check logs for request details");
+    // }
+
+   
+
+// @PostMapping("/login")
+// public Map<String, String> login(HttpServletRequest request) throws IOException {
+//     // Read the raw request body
+//     String body = new BufferedReader(request.getReader()).lines().collect(Collectors.joining("\n"));
+
+//     System.out.println("Manually Read Raw JSON: " + body); // Debugging log
+
+//     return Map.of("message", body.isEmpty() ? "No JSON received" : body);
+// }
+
+}

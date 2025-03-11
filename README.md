@@ -35,8 +35,16 @@ To prevent OpenAPI Generator from overwriting `README.md`, create the ignore fil
 echo "README.md" > .openapi-generator-ignore
 ```
 
-#### **Step 3: Run OpenAPI Generator as Your User (Avoid Root Ownership)**
-To ensure generated files are owned by your local user and not root, use:
+#### **Step 3: Run OpenAPI Generator**
+
+If you'd like to follow along from this point, **checkout the `openapi-spec-start` branch**, which contains only the OpenAPI spec, `.openapi-generator-ignore`, and `README.md`.
+
+```sh
+git checkout -b openapi-spec-start origin/openapi-spec-start
+```
+
+todo : create this branch
+
 ```sh
 PROJECT_NAME=taskapi
 PACKAGE_NAME=com.camelcase
@@ -227,3 +235,4 @@ query {
 ### TODO
 
 - GraphQL in swagger etc.
+- remove us english

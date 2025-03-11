@@ -37,10 +37,10 @@ echo "README.md" > .openapi-generator-ignore
 
 #### **Step 3: Run OpenAPI Generator**
 
-If you'd like to follow along from this point, **checkout the `openapi-spec-start` branch**, which contains only the OpenAPI spec, `.openapi-generator-ignore`, and `README.md`.
+If you'd like to follow along from this point, **checkout the `task-api-spec-start` branch**, which contains only the OpenAPI spec, `.openapi-generator-ignore`, and `README.md`.
 
 ```sh
-git checkout -b openapi-spec-start origin/openapi-spec-start
+git checkout -b task-api-spec-start origin/task-api-spec-start
 ```
 
 todo : create this branch

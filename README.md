@@ -190,8 +190,14 @@ Include the token in the `Authorization` header:
 curl -X GET "http://localhost:8080/tasks" -H "Authorization: Bearer your-jwt-token"
 ```
 
-### **Authentication in API Docs)**
+### **Authentication in API Docs**
 
+Most of the API documentation tools used in this project **support authentication**, allowing users to securely test protected endpoints **directly within the documentation interface**.
+
+- **Swagger UI, Stoplight Elements, and RapiDoc** support authentication via **OAuth2, Basic Auth, and API Keys**, enabling users to obtain tokens and include them in API requests.
+- **ReDoc**, however, is **view-only** and does not support interactive authentication or API testing.
+
+For this demo, authentication is handled using **OAuth2 Password Flow**, where users enter a **username and password** to receive a token. This token is then **automatically included** in API requests when testing endpoints. In a **production environment**, an **Authorization Code Flow** with an external **OAuth provider** (e.g., Keycloak, Okta) would typically be used for improved security and identity management.
 
 
 **📸 Screenshot:**  

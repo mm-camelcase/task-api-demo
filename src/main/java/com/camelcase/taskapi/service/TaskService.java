@@ -1,79 +1,76 @@
 package com.camelcase.taskapi.service;
 
 import com.camelcase.taskapi.exception.ResourceNotFoundException;
+import com.camelcase.taskapi.mapper.TaskMapper;
 import com.camelcase.taskapi.model.Task;
 import com.camelcase.taskapi.model.TaskCreateRequest;
 import com.camelcase.taskapi.model.TaskUpdateRequest;
-
-import net.datafaker.Faker;
+import com.camelcase.taskapi.model.entity.TaskStatusEnum;
+import com.camelcase.taskapi.model.entity.TaskEntity;
+import com.camelcase.taskapi.repository.TaskRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.*;
-import java.time.ZoneId;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
+//import java.util.Optional;
 
 @Service
 public class TaskService {
 
-    private final Map<String, Task> taskStore = new HashMap<>();
-    private final Faker faker = new Faker();
+    private final TaskRepository taskRepository;
+    private final TaskMapper taskMapper;
 
-    public TaskService() {
-        // Generate 10 fake tasks
-        for (int i = 1; i <= 10; i++) {
-            Task task = new Task();
-            task.setId(UUID.randomUUID().toString());
-            task.setTitle(faker.lorem().sentence(3));
-            task.setDescription(faker.lorem().paragraph());
-            task.setStatus(Task.StatusEnum.valueOf(faker.options().option("pending", "in_progress", "completed").toUpperCase()));
-            task.setDueDate(faker.date().future(10, TimeUnit.DAYS).toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-
-            taskStore.put(task.getId(), task);
-        }
+    public TaskService(TaskRepository taskRepository, TaskMapper taskMapper) {
+        this.taskRepository = taskRepository;
+        this.taskMapper = taskMapper;
     }
 
     // Get all tasks with pagination and optional status filtering
-    public List<Task> findAll(Integer page, Integer size, String status) {
-        int validPage = Math.max(page, 0); // Ensure non-negative page number
+    public Page<Task> findAll(int page, int size, String status) {
+        Pageable pageable = PageRequest.of(Math.max(page - 1, 0), size);
+        Page<TaskEntity> taskPage;
 
-        return taskStore.values().stream()
-                .filter(task -> status == null || task.getStatus().name().equalsIgnoreCase(status))
-                .skip(Math.max(0, (long) (validPage - 1) * size)) // Prevent negative skip
-                .limit(size)
-                .collect(Collectors.toList());
+        if (status != null && !status.isEmpty()) {
+            TaskStatusEnum statusEnum = TaskStatusEnum.fromString(status);
+            taskPage = taskRepository.findByTaskStatus(statusEnum, pageable);
+        } else {
+            taskPage = taskRepository.findAll(pageable);
+        }
+
+        return taskPage.map(taskMapper::toDto);
     }
 
     // Get a specific task by ID with error handling
     public Task get(String id) {
-        return Optional.ofNullable(taskStore.get(id))
+        TaskEntity taskEntity = taskRepository.findById(Long.valueOf(id))
                 .orElseThrow(() -> new ResourceNotFoundException("Task with ID " + id + " not found"));
+        return taskMapper.toDto(taskEntity);
     }
 
     // Create a new task
     public Task create(TaskCreateRequest request) {
-        Task task = new Task();
-        task.setId(UUID.randomUUID().toString());
-        task.setTitle(request.getTitle() != null ? request.getTitle() : faker.lorem().sentence(3));
-        task.setDescription(request.getDescription() != null ? request.getDescription() : faker.lorem().paragraph());
-        task.setStatus(request.getStatus() != null ? Task.StatusEnum.valueOf(request.getStatus().name()) : Task.StatusEnum.valueOf(faker.options().option("pending", "in_progress", "completed").toUpperCase()));
-        task.setDueDate(request.getDueDate() != null ? request.getDueDate() : faker.date().future(10, TimeUnit.DAYS).toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        TaskEntity taskEntity = new TaskEntity();
+        taskEntity.setTitle(request.getTitle());
+        taskEntity.setDescription(request.getDescription());
+        taskEntity.setTaskStatus(TaskStatusEnum.valueOf(request.getTaskStatus().name()));
+        taskEntity.setDueDate(request.getDueDate());
 
-        taskStore.put(task.getId(), task);
-        return task;
+        return taskMapper.toDto(taskRepository.save(taskEntity));
     }
 
     // Delete a task with error handling
     public void delete(String id) {
-        if (!taskStore.containsKey(id)) {
+        Long taskId = Long.valueOf(id);
+        if (!taskRepository.existsById(taskId)) {
             throw new ResourceNotFoundException("Task with ID " + id + " not found");
         }
-        taskStore.remove(id);
+        taskRepository.deleteById(taskId);
     }
 
     // Update an existing task with proper error handling
     public Task update(String id, TaskUpdateRequest request) {
-        Task existingTask = Optional.ofNullable(taskStore.get(id))
+        Long taskId = Long.valueOf(id);
+        TaskEntity existingTask = taskRepository.findById(taskId)
                 .orElseThrow(() -> new ResourceNotFoundException("Task with ID " + id + " not found"));
 
         if (request.getTitle() != null) {
@@ -82,21 +79,19 @@ public class TaskService {
         if (request.getDescription() != null) {
             existingTask.setDescription(request.getDescription());
         }
-        if (request.getStatus() != null) {
-            existingTask.setStatus(Task.StatusEnum.valueOf(request.getStatus().name()));
+        if (request.getTaskStatus() != null) {
+            existingTask.setTaskStatus(TaskStatusEnum.valueOf(request.getTaskStatus().name()));
         }
         if (request.getDueDate() != null) {
             existingTask.setDueDate(request.getDueDate());
         }
 
-        taskStore.put(id, existingTask);
-        return existingTask;
+        return taskMapper.toDto(taskRepository.save(existingTask));
     }
 
     // Count tasks by status
     public int countTasks(String status) {
-        return (int) taskStore.values().stream()
-                .filter(task -> status == null || task.getStatus().name().equalsIgnoreCase(status))
-                .count();
+        TaskStatusEnum statusEnum = TaskStatusEnum.fromString(status);
+        return (int) taskRepository.countByTaskStatus(statusEnum);
     }
 }

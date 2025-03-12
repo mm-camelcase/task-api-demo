@@ -23,7 +23,7 @@ import jakarta.annotation.Generated;
  * TaskPage
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-10T18:22:10.574140745Z[Etc/UTC]", comments = "Generator version: 7.13.0-SNAPSHOT")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-12T12:51:37.560464508Z[Etc/UTC]", comments = "Generator version: 7.13.0-SNAPSHOT")
 public class TaskPage {
 
   @Valid

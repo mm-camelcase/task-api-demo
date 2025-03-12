@@ -36,7 +36,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-10T18:22:10.574140745Z[Etc/UTC]", comments = "Generator version: 7.13.0-SNAPSHOT")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-12T12:51:37.560464508Z[Etc/UTC]", comments = "Generator version: 7.13.0-SNAPSHOT")
 @Validated
 @Tag(name = "tasks", description = "the tasks API")
 public interface TasksApi {
@@ -82,7 +82,7 @@ public interface TasksApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"dueDate\" : \"2000-01-23\", \"description\" : \"description\", \"id\" : \"id\", \"title\" : \"title\", \"status\" : \"pending\" }";
+                    String exampleString = "{ \"dueDate\" : \"2000-01-23\", \"description\" : \"description\", \"id\" : \"id\", \"title\" : \"title\", \"taskStatus\" : \"pending\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -147,7 +147,7 @@ public interface TasksApi {
      * GET /tasks : Get all tasks
      * Retrieve a paginated list of all tasks with optional filters.
      *
-     * @param status Filter tasks by status. (optional)
+     * @param taskStatus Filter tasks by taskStatus. (optional)
      * @param page Pagination - page number. (optional, default to 1)
      * @param size Pagination - number of tasks per page. (optional, default to 10)
      * @return List of tasks retrieved successfully. (status code 200)
@@ -172,14 +172,14 @@ public interface TasksApi {
     )
     
     default ResponseEntity<TaskPage> findAll(
-        @Parameter(name = "status", description = "Filter tasks by status.", in = ParameterIn.QUERY) @Valid @RequestParam(value = "status", required = false) String status,
+        @Parameter(name = "taskStatus", description = "Filter tasks by taskStatus.", in = ParameterIn.QUERY) @Valid @RequestParam(value = "taskStatus", required = false) String taskStatus,
         @Parameter(name = "page", description = "Pagination - page number.", in = ParameterIn.QUERY) @Valid @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
         @Parameter(name = "size", description = "Pagination - number of tasks per page.", in = ParameterIn.QUERY) @Valid @RequestParam(value = "size", required = false, defaultValue = "10") Integer size
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"totalItems\" : 6, \"totalPages\" : 0, \"tasks\" : [ { \"dueDate\" : \"2000-01-23\", \"description\" : \"description\", \"id\" : \"id\", \"title\" : \"title\", \"status\" : \"pending\" }, { \"dueDate\" : \"2000-01-23\", \"description\" : \"description\", \"id\" : \"id\", \"title\" : \"title\", \"status\" : \"pending\" } ] }";
+                    String exampleString = "{ \"totalItems\" : 6, \"totalPages\" : 0, \"tasks\" : [ { \"dueDate\" : \"2000-01-23\", \"description\" : \"description\", \"id\" : \"id\", \"title\" : \"title\", \"taskStatus\" : \"pending\" }, { \"dueDate\" : \"2000-01-23\", \"description\" : \"description\", \"id\" : \"id\", \"title\" : \"title\", \"taskStatus\" : \"pending\" } ] }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -226,7 +226,7 @@ public interface TasksApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"dueDate\" : \"2000-01-23\", \"description\" : \"description\", \"id\" : \"id\", \"title\" : \"title\", \"status\" : \"pending\" }";
+                    String exampleString = "{ \"dueDate\" : \"2000-01-23\", \"description\" : \"description\", \"id\" : \"id\", \"title\" : \"title\", \"taskStatus\" : \"pending\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -285,7 +285,7 @@ public interface TasksApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"dueDate\" : \"2000-01-23\", \"description\" : \"description\", \"id\" : \"id\", \"title\" : \"title\", \"status\" : \"pending\" }";
+                    String exampleString = "{ \"dueDate\" : \"2000-01-23\", \"description\" : \"description\", \"id\" : \"id\", \"title\" : \"title\", \"taskStatus\" : \"pending\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

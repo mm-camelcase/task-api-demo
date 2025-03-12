@@ -22,7 +22,7 @@ import jakarta.annotation.Generated;
  * TaskCreateRequest
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-10T18:22:10.574140745Z[Etc/UTC]", comments = "Generator version: 7.13.0-SNAPSHOT")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-12T12:51:37.560464508Z[Etc/UTC]", comments = "Generator version: 7.13.0-SNAPSHOT")
 public class TaskCreateRequest {
 
   private String title;
@@ -30,9 +30,9 @@ public class TaskCreateRequest {
   private @Nullable String description;
 
   /**
-   * Gets or Sets status
+   * Gets or Sets taskStatus
    */
-  public enum StatusEnum {
+  public enum TaskStatusEnum {
     PENDING("pending"),
     
     IN_PROGRESS("in_progress"),
@@ -41,7 +41,7 @@ public class TaskCreateRequest {
 
     private String value;
 
-    StatusEnum(String value) {
+    TaskStatusEnum(String value) {
       this.value = value;
     }
 
@@ -56,8 +56,8 @@ public class TaskCreateRequest {
     }
 
     @JsonCreator
-    public static StatusEnum fromValue(String value) {
-      for (StatusEnum b : StatusEnum.values()) {
+    public static TaskStatusEnum fromValue(String value) {
+      for (TaskStatusEnum b : TaskStatusEnum.values()) {
         if (b.value.equals(value)) {
           return b;
         }
@@ -66,7 +66,7 @@ public class TaskCreateRequest {
     }
   }
 
-  private StatusEnum status;
+  private TaskStatusEnum taskStatus;
 
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
   private LocalDate dueDate;
@@ -78,9 +78,9 @@ public class TaskCreateRequest {
   /**
    * Constructor with only required parameters
    */
-  public TaskCreateRequest(String title, StatusEnum status, LocalDate dueDate) {
+  public TaskCreateRequest(String title, TaskStatusEnum taskStatus, LocalDate dueDate) {
     this.title = title;
-    this.status = status;
+    this.taskStatus = taskStatus;
     this.dueDate = dueDate;
   }
 
@@ -124,24 +124,24 @@ public class TaskCreateRequest {
     this.description = description;
   }
 
-  public TaskCreateRequest status(StatusEnum status) {
-    this.status = status;
+  public TaskCreateRequest taskStatus(TaskStatusEnum taskStatus) {
+    this.taskStatus = taskStatus;
     return this;
   }
 
   /**
-   * Get status
-   * @return status
+   * Get taskStatus
+   * @return taskStatus
    */
   @NotNull 
-  @Schema(name = "status", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("status")
-  public StatusEnum getStatus() {
-    return status;
+  @Schema(name = "taskStatus", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("taskStatus")
+  public TaskStatusEnum getTaskStatus() {
+    return taskStatus;
   }
 
-  public void setStatus(StatusEnum status) {
-    this.status = status;
+  public void setTaskStatus(TaskStatusEnum taskStatus) {
+    this.taskStatus = taskStatus;
   }
 
   public TaskCreateRequest dueDate(LocalDate dueDate) {
@@ -175,13 +175,13 @@ public class TaskCreateRequest {
     TaskCreateRequest taskCreateRequest = (TaskCreateRequest) o;
     return Objects.equals(this.title, taskCreateRequest.title) &&
         Objects.equals(this.description, taskCreateRequest.description) &&
-        Objects.equals(this.status, taskCreateRequest.status) &&
+        Objects.equals(this.taskStatus, taskCreateRequest.taskStatus) &&
         Objects.equals(this.dueDate, taskCreateRequest.dueDate);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(title, description, status, dueDate);
+    return Objects.hash(title, description, taskStatus, dueDate);
   }
 
   @Override
@@ -190,7 +190,7 @@ public class TaskCreateRequest {
     sb.append("class TaskCreateRequest {\n");
     sb.append("    title: ").append(toIndentedString(title)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
-    sb.append("    status: ").append(toIndentedString(status)).append("\n");
+    sb.append("    taskStatus: ").append(toIndentedString(taskStatus)).append("\n");
     sb.append("    dueDate: ").append(toIndentedString(dueDate)).append("\n");
     sb.append("}");
     return sb.toString();

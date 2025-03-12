@@ -11,6 +11,7 @@ import jakarta.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,12 +40,11 @@ public class TaskController implements TasksApi {
             @Valid @RequestParam(defaultValue = "1") Integer page,
             @Valid @RequestParam(defaultValue = "10") Integer size
             ) {
-        List<Task> tasks = taskService.findAll(page, size, status);
-        int totalTasks = taskService.countTasks(status);
+        Page<Task> tasks = taskService.findAll(page, size, status);
         TaskPage taskPage = new TaskPage();
-        taskPage.setTasks(tasks);
-        taskPage.setTotalPages((int) Math.ceil((double) totalTasks / size));
-        taskPage.setTotalItems(totalTasks);
+        taskPage.setTasks(tasks.getContent());
+        taskPage.setTotalPages(tasks.getTotalPages());
+        taskPage.setTotalItems((int) tasks.getTotalElements());
         return ResponseEntity.ok(taskPage);
     }
 

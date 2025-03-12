@@ -22,7 +22,7 @@ import jakarta.annotation.Generated;
  * TaskUpdateRequest
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-10T18:22:10.574140745Z[Etc/UTC]", comments = "Generator version: 7.13.0-SNAPSHOT")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-12T12:51:37.560464508Z[Etc/UTC]", comments = "Generator version: 7.13.0-SNAPSHOT")
 public class TaskUpdateRequest {
 
   private @Nullable String title;
@@ -30,9 +30,9 @@ public class TaskUpdateRequest {
   private @Nullable String description;
 
   /**
-   * Gets or Sets status
+   * Gets or Sets taskStatus
    */
-  public enum StatusEnum {
+  public enum TaskStatusEnum {
     PENDING("pending"),
     
     IN_PROGRESS("in_progress"),
@@ -41,7 +41,7 @@ public class TaskUpdateRequest {
 
     private String value;
 
-    StatusEnum(String value) {
+    TaskStatusEnum(String value) {
       this.value = value;
     }
 
@@ -56,8 +56,8 @@ public class TaskUpdateRequest {
     }
 
     @JsonCreator
-    public static StatusEnum fromValue(String value) {
-      for (StatusEnum b : StatusEnum.values()) {
+    public static TaskStatusEnum fromValue(String value) {
+      for (TaskStatusEnum b : TaskStatusEnum.values()) {
         if (b.value.equals(value)) {
           return b;
         }
@@ -66,7 +66,7 @@ public class TaskUpdateRequest {
     }
   }
 
-  private @Nullable StatusEnum status;
+  private @Nullable TaskStatusEnum taskStatus;
 
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
   private @Nullable LocalDate dueDate;
@@ -111,24 +111,24 @@ public class TaskUpdateRequest {
     this.description = description;
   }
 
-  public TaskUpdateRequest status(StatusEnum status) {
-    this.status = status;
+  public TaskUpdateRequest taskStatus(TaskStatusEnum taskStatus) {
+    this.taskStatus = taskStatus;
     return this;
   }
 
   /**
-   * Get status
-   * @return status
+   * Get taskStatus
+   * @return taskStatus
    */
   
-  @Schema(name = "status", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("status")
-  public StatusEnum getStatus() {
-    return status;
+  @Schema(name = "taskStatus", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("taskStatus")
+  public TaskStatusEnum getTaskStatus() {
+    return taskStatus;
   }
 
-  public void setStatus(StatusEnum status) {
-    this.status = status;
+  public void setTaskStatus(TaskStatusEnum taskStatus) {
+    this.taskStatus = taskStatus;
   }
 
   public TaskUpdateRequest dueDate(LocalDate dueDate) {
@@ -162,13 +162,13 @@ public class TaskUpdateRequest {
     TaskUpdateRequest taskUpdateRequest = (TaskUpdateRequest) o;
     return Objects.equals(this.title, taskUpdateRequest.title) &&
         Objects.equals(this.description, taskUpdateRequest.description) &&
-        Objects.equals(this.status, taskUpdateRequest.status) &&
+        Objects.equals(this.taskStatus, taskUpdateRequest.taskStatus) &&
         Objects.equals(this.dueDate, taskUpdateRequest.dueDate);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(title, description, status, dueDate);
+    return Objects.hash(title, description, taskStatus, dueDate);
   }
 
   @Override
@@ -177,7 +177,7 @@ public class TaskUpdateRequest {
     sb.append("class TaskUpdateRequest {\n");
     sb.append("    title: ").append(toIndentedString(title)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
-    sb.append("    status: ").append(toIndentedString(status)).append("\n");
+    sb.append("    taskStatus: ").append(toIndentedString(taskStatus)).append("\n");
     sb.append("    dueDate: ").append(toIndentedString(dueDate)).append("\n");
     sb.append("}");
     return sb.toString();

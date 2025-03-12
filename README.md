@@ -178,7 +178,14 @@ This project includes **multiple API documentation tools** to provide flexibilit
 - For this demo, authentication is handled via a **local auth endpoint** that issues tokens using the **OAuth2 Password Flow**.
 - In a **production environment**, authentication would typically use the **Authorization Code Flow** with an external **OAuth2 provider** such as **Keycloak**, **Okta**, or **AWS Cognito**, ensuring enhanced security and proper identity federation.
 
+## 🔑 Demo User Credentials
+
+The demo user credentials are configured in the [``application.yml``](https://github.com/mm-camelcase/task-api-demo/blob/service-impl/src/main/resources/application.yml#L21). You can find the username and password there for authentication.
+
 ### **Login to Get a Token**
+
+
+
 ```sh
 curl -X POST "http://localhost:8080/auth/login?username=admin&password=password"
 ```

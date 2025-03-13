@@ -243,3 +243,4 @@ query {
 
 - GraphQL in swagger etc.
 - remove us english
+- remove faker refs

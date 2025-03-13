@@ -36,7 +36,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         // ✅ Skip filter for public endpoints
         String requestPath = request.getServletPath();
-        if (requestPath.equals("/api/auth/login") || requestPath.equals("/") || requestPath.endsWith(".html") || requestPath.endsWith("favicon.ico") || requestPath.startsWith("/swagger-ui") || requestPath.startsWith("/v3/api-docs")) {
+        if (requestPath.equals("/api/auth/login") || requestPath.equals("/") || requestPath.endsWith(".html") || requestPath.endsWith("favicon.ico") || requestPath.startsWith("/swagger-ui") || requestPath.startsWith("/v3/api-docs") || requestPath.startsWith("/public") || requestPath.startsWith("/graphql") || requestPath.startsWith("/graphiql")|| requestPath.startsWith("/vendor")) {
             chain.doFilter(request, response);
             return;
         }

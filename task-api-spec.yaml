@@ -140,8 +140,16 @@ paths:
           schema:
             type: string
       responses:
-        '204':
+        '200':  # ✅ Change 204 -> 200 with response body
           description: Task deleted successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
         '404':
           description: Task not found.
           content:

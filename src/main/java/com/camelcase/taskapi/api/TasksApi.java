@@ -5,6 +5,7 @@
  */
 package com.camelcase.taskapi.api;
 
+import com.camelcase.taskapi.model.Delete200Response;
 import com.camelcase.taskapi.model.ErrorResponse;
 import com.camelcase.taskapi.model.Task;
 import com.camelcase.taskapi.model.TaskCreateRequest;
@@ -36,7 +37,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-12T12:51:37.560464508Z[Etc/UTC]", comments = "Generator version: 7.13.0-SNAPSHOT")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-03-13T11:38:43.993336073Z[Etc/UTC]", comments = "Generator version: 7.13.0-SNAPSHOT")
 @Validated
 @Tag(name = "tasks", description = "the tasks API")
 public interface TasksApi {
@@ -103,7 +104,7 @@ public interface TasksApi {
      * Permanently remove a task by its ID (hard delete).
      *
      * @param id  (required)
-     * @return Task deleted successfully. (status code 204)
+     * @return Task deleted successfully. (status code 200)
      *         or Task not found. (status code 404)
      */
     @Operation(
@@ -111,7 +112,9 @@ public interface TasksApi {
         summary = "Delete a task",
         description = "Permanently remove a task by its ID (hard delete).",
         responses = {
-            @ApiResponse(responseCode = "204", description = "Task deleted successfully."),
+            @ApiResponse(responseCode = "200", description = "Task deleted successfully.", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Delete200Response.class))
+            }),
             @ApiResponse(responseCode = "404", description = "Task not found.", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))
             })
@@ -126,11 +129,16 @@ public interface TasksApi {
         produces = { "application/json" }
     )
     
-    default ResponseEntity<Void> delete(
+    default ResponseEntity<Delete200Response> delete(
         @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") String id
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"success\" : true }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
                     String exampleString = "{ \"details\" : [ \"details\", \"details\" ], \"error\" : \"error\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);

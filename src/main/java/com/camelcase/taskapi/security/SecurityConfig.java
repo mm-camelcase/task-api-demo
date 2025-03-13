@@ -39,7 +39,7 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())  // Disable CSRF for API requests
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/login", "/", "/*.html", "/favicon.ico", "/static/**", "/public/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()  // ✅ Allow static resources
+                .requestMatchers("/api/auth/login", "/", "/*.html", "/favicon.ico", "/static/**", "/public/**", "/swagger-ui/**", "/v3/api-docs/**", "/graphql", "/graphiql", "/vendor/**", "/graphql/schema").permitAll()  // ✅ Allow static resources
                 .anyRequest().authenticated())  // Protect all other endpoints
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))  // Enforce stateless JWT authentication
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

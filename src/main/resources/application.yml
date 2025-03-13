@@ -7,6 +7,12 @@ spring:
       continue-on-error: true
   jpa:
     defer-datasource-initialization: true
+  graphql:
+    graphiql:
+      enabled: true
+    schema:
+      printer:
+        enabled: true
 
 springdoc:
   swagger-ui:
@@ -20,6 +26,11 @@ security:
   admin:
     username: admin
     password: BlueSky
+
+
+logging:
+  level:
+    org.springframework.graphql: DEBUG
 
 
 

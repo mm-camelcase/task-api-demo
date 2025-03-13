@@ -12,10 +12,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 //import java.util.Optional;
 
 @Service
 public class TaskService {
+
+    private static final Logger logger = LoggerFactory.getLogger(TaskService.class);
 
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
@@ -37,7 +41,11 @@ public class TaskService {
             taskPage = taskRepository.findAll(pageable);
         }
 
-        return taskPage.map(taskMapper::toDto);
+        Page<Task> p = taskPage.map(taskMapper::toDto);
+
+        logger.info("🚀 Found {} tasks", p.getContent());
+
+        return p;
     }
 
     // Get a specific task by ID with error handling

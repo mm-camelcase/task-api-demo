@@ -3,13 +3,13 @@
 🚀 **Task API Demo** – A fully featured **Task Management API** built with **Spring Boot**, supporting **both REST and GraphQL**.
 
 ## 🔹 Features
-✅ **REST & GraphQL API** – Flexible data querying options  
-✅ **OpenAPI & Swagger UI** – Auto-generated API documentation  
-✅ **JWT Authentication** – Secure login with token-based auth  
-✅ **Simulated Login** – Test authentication easily in Swagger  
-✅ **Validation & Error Handling** – Standardized request validation  
-✅ **Mock Data with Faker** – Realistic tasks without a database  
-✅ **Pagination & Filtering** – Efficient data retrieval  
+👉 **REST & GraphQL API** – Flexible data querying options  
+👉 **OpenAPI & Swagger UI** – Auto-generated API documentation  
+👉 **JWT Authentication** – Secure login with token-based auth  
+👉 **Simulated Login** – Test authentication easily in Swagger  
+👉 **Validation & Error Handling** – Standardized request validation  
+👉 **Pagination & Filtering** – Efficient data retrieval  
+👉 **Embedded H2 Database with Spring Data JPA** – Lightweight, in-memory persistence for easy testing
 
 ## 🏗️ How It Was Built
 This project follows an **API-first** approach, where the API specification was defined first, and the code was auto-generated.
@@ -24,28 +24,7 @@ This project follows an **API-first** approach, where the API specification was 
 
 #### **2️⃣ Auto-Generate Code Using OpenAPI Generator**
 
-#### **Step 1: Ensure the OpenAPI Spec Exists**
-Before running OpenAPI Generator, ensure `task-api-spec.yaml` is present in the **root directory**:
-```sh
-touch task-api-spec.yaml
-```
-Then **add your OpenAPI YAML content** inside `task-api-spec.yaml`.
-
-#### **Step 2: Create `.openapi-generator-ignore` to Preserve `README.md`**
-To prevent OpenAPI Generator from overwriting `README.md`, create the ignore file:
-```sh
-echo "README.md" > .openapi-generator-ignore
-```
-
-#### **Step 3: Run OpenAPI Generator**
-
-If you'd like to follow along from this point, **checkout the `task-api-spec-start` branch**, which contains only the OpenAPI spec, `.openapi-generator-ignore`, and `README.md`.
-
-```sh
-git checkout -b task-api-spec-start origin/task-api-spec-start
-```
-
-todo : create this branch
+To generate code using OpenAPI:  
 
 ```sh
 PROJECT_NAME=taskapi
@@ -62,32 +41,8 @@ docker run --rm -v ${PWD}:/local -u $(id -u):$(id -g) openapitools/openapi-gener
   --artifact-id=${PROJECT_NAME} \
   --package-name=${PACKAGE_NAME}.${PROJECT_NAME}
 ```
-✅ **Keeps `task-api-spec.yaml` in the project root.**  
-✅ **Prevents `README.md` from being overwritten** (if `.openapi-generator-ignore` is set).  
-✅ **Ensures files are owned by your user, not root.**  
 
-#### **Why `interfaceOnly=true`?**
-Setting `interfaceOnly=true` ensures that only **API interfaces and DTOs** are generated, allowing you to manually implement controller logic. This keeps business logic separate and prevents generated code from overwriting custom implementations.
-
---------------------------------
-
-To generate code using OpenAPI:
-```sh
-PROJECT_NAME=taskapi
-PACKAGE_NAME=com.camelcase
-
-docker run --rm -v ${PWD}:/local -u $(id -u):$(id -g) openapitools/openapi-generator-cli generate \
-  -i /local/task-api-spec.yaml \
-  -g spring \
-  -o /local \
-  --additional-properties=library=spring-boot,useSpringBoot3=true,java17=true,dateLibrary=java8,interfaceOnly=true \
-  --api-package=${PACKAGE_NAME}.${PROJECT_NAME}.api \
-  --model-package=${PACKAGE_NAME}.${PROJECT_NAME}.model \
-  --group-id=${PACKAGE_NAME} \
-  --artifact-id=${PROJECT_NAME} \
-  --package-name=${PACKAGE_NAME}.${PROJECT_NAME}
-```
-👍 **Prevents `README.md` from being overwritten** using `.openapi-generator-ignore`.  
+👍 **Uses the OpenAPI specification (`task-api-spec.yaml`) created in the previous step as input.** 
 👍 **Keeps generated interfaces separate from business logic** (`interfaceOnly=true`).  
 
 #### **3️⃣ Implement Business Logic & Services**
@@ -98,16 +53,10 @@ docker run --rm -v ${PWD}:/local -u $(id -u):$(id -g) openapitools/openapi-gener
 
 ### GraphQL API
 
-
 #### **4️⃣ Add GraphQL Support**
-- Added GraphQL using `spring-boot-starter-graphql`.
-- Created `task.graphqls` schema for flexible queries.
-- Integrated with the same **service layer** as REST.
 
------
-
-#### **3️⃣ Add GraphQL Support**
 To generate the **GraphQL schema** from the existing OpenAPI spec, run:
+
 ```sh
 docker run --rm -v $(pwd):/app -w /app -u $(id -u):$(id -g) node:22 npx openapi-to-graphql-cli ./task-api-spec.yaml \
 --save schema.graphql

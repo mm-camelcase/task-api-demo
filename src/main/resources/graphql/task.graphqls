@@ -52,6 +52,13 @@ type Mutation {
   create(taskCreateRequestInput: TaskCreateRequestInput!): Task
 
   """
+  Permanently remove a task by its ID (hard delete).
+  
+  Equivalent to DELETE /tasks/{id}
+  """
+  delete(id: String!): Task2
+
+  """
   Modify an existing task.
   
   Equivalent to PUT /tasks/{id}
@@ -68,6 +75,10 @@ input TaskCreateRequestInput {
 
   """Title must be between 3 and 100 characters."""
   title: String!
+}
+
+type Task2 {
+  success: Boolean
 }
 
 input TaskUpdateRequestInput {

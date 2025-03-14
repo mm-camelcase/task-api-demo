@@ -1,6 +1,7 @@
 package com.camelcase.taskapi.controller;
 
 import com.camelcase.taskapi.exception.ResourceNotFoundException;
+import com.camelcase.taskapi.model.Delete200Response;
 import com.camelcase.taskapi.model.Task;
 import com.camelcase.taskapi.model.TaskCreateRequest;
 import com.camelcase.taskapi.model.TaskPage;
@@ -8,7 +9,6 @@ import com.camelcase.taskapi.model.TaskUpdateRequest;
 import com.camelcase.taskapi.service.TaskService;
 import com.camelcase.taskapi.model.entity.TaskStatusEnum;
 import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
@@ -16,7 +16,6 @@ import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-//@Component
 @Controller
 public class TaskGraphQLController {
 
@@ -25,22 +24,13 @@ public class TaskGraphQLController {
 
     public TaskGraphQLController(TaskService taskService) {
         this.taskService = taskService;
-        logger.info("🚀 INIT");
     }
 
     /**
      * Query to fetch a paginated list of tasks.
      */
-    // @QueryMapping(name = "taskPage")
-    // public Page<Task> taskPage(@Argument int page, @Argument int size, @Argument TaskStatusEnum taskStatus) {
-    //     logger.info("🚀 taskPage query called with page={}, size={}, taskStatus={}", page, size, taskStatus);
-    //     return taskService.findAll(page, size, taskStatus != null ? taskStatus.name() : null);
-    // }
-
     @QueryMapping(name = "taskPage")
     public TaskPage taskPage(@Argument int page, @Argument int size, @Argument TaskStatusEnum taskStatus) {
-        logger.info("🚀 taskPage query called with page={}, size={}, taskStatus={}", page, size, taskStatus);
-        
         Page<Task> pageResult = taskService.findAll(page, size, taskStatus != null ? taskStatus.name() : null);
         
         TaskPage taskPage = new TaskPage();
@@ -49,12 +39,6 @@ public class TaskGraphQLController {
         taskPage.setTotalItems((int) pageResult.getTotalElements());
 
         return taskPage;
-
-        // return new TaskPage(
-        //     pageResult.getContent(),  // ✅ Ensure we return a list, not a Page<>
-        //     pageResult.getTotalPages(),
-        //     pageResult.getTotalElements()
-        // );
     }
 
     /**
@@ -62,7 +46,6 @@ public class TaskGraphQLController {
      */
     @QueryMapping(name = "task")  // FIX: Method name matches schema
     public Task task(@Argument String id) {
-        logger.info("🚀 task query called with id={}", id);
         return taskService.get(id);
     }
 
@@ -85,13 +68,16 @@ public class TaskGraphQLController {
     /**
      * Mutation to delete a task.
      */
-    @MutationMapping
-    public Boolean deleteTask(@Argument String id) {
+    @MutationMapping(name = "delete")
+    public Delete200Response delete(@Argument String id) {
+        Delete200Response delete200Response = new Delete200Response();
         try {
             taskService.delete(id);
-            return true;
+            delete200Response.setSuccess(true);
+            return delete200Response;
         } catch (ResourceNotFoundException e) {
-            return false;
+            delete200Response.setSuccess(false);
+            return delete200Response;
         }
     }
 

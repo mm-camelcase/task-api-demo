@@ -42,7 +42,7 @@ docker run --rm -v ${PWD}:/local -u $(id -u):$(id -g) openapitools/openapi-gener
   --package-name=${PACKAGE_NAME}.${PROJECT_NAME}
 ```
 
-👍 **Uses the OpenAPI specification (`task-api-spec.yaml`) created in the previous step as input.** 
+👍 **Uses the OpenAPI specification (`task-api-spec.yaml`) created in the previous step as input.**   
 👍 **Keeps generated interfaces separate from business logic** (`interfaceOnly=true`).  
 
 #### **3️⃣ Implement Business Logic & Services**

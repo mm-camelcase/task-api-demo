@@ -47,7 +47,7 @@ docker run --rm -v ${PWD}:/local -u $(id -u):$(id -g) openapitools/openapi-gener
 
 #### **3️⃣ Implement Business Logic & Services**
 - A **service layer** was added for clean separation of concerns.
-- **Mock data with Faker** was used to simulate a working API without a database.
+- **H2 database** with **Spring Data JPA** was used for persistence and testing
 - **Spring Security & JWT authentication** was implemented manually.
 
 

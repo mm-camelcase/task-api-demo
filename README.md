@@ -69,7 +69,6 @@ mv schema.graphql src/main/resources/graphql/task.graphqls
 - Moves it to the correct location (`src/main/resources/graphql/task.graphqls`).
 
 🛠️ **Additional Manual Steps Needed:**
-- Fine-tune the **GraphQL schema** (e.g., add custom queries/mutations if needed).
 - Implement **GraphQL resolvers** using the existing **service layer**.
 
 ----------------------------
@@ -78,14 +77,13 @@ mv schema.graphql src/main/resources/graphql/task.graphqls
 | **Feature**                  | **Auto-Generated?** | **Manual Implementation?** |
 |------------------------------|---------------------|----------------------------|
 | **Controller interfaces**    | ✅ Yes (OpenAPI Generator) | 🔴 Need to implement methods |
-| **GraphQL schema (`.graphqls`)** | ❌ No | ✅ Needs manual definition |
+| **GraphQL schema (`.graphqls`)** | ✅ Yes (`openapi-to-graphql-cli`) | ❌ No manual work |
 | **DTOs (Models)**            | ✅ Yes (OpenAPI Generator) | 🔴 Need to extend with Lombok |
 | **Validation (`@NotBlank`)**  | ✅ Yes (if defined in OpenAPI spec) | ❌ No manual work |
-| **Exception Handling**       | ❌ No | ✅ Need `GlobalExceptionHandler.java` |
+| **Exception Handling**       | ❌ No | ✅ Need `GlobalExceptionHandler.java` and `GraphQLExceptionHandler.java`|
 | **Service Layer (`TaskService`)** | ❌ No | ✅ Need to implement logic |
 | **Pagination for REST**      | ✅ Yes (via OpenAPI) | 🔴 Implement in service layer |
-| **Pagination for GraphQL**   | ❌ No | ✅ Implement query resolver and service |
-| **Faker for Mock Data**      | ❌ No | ✅ Need to add manually |
+| **Pagination for GraphQL**   | ✅ Yes (via OpenAPI to GraphQL generator) | 🔴 Implement in service layer |
 | **Database (H2, Repository)** | ❌ No | ✅ Need to implement manually |
 
 ---

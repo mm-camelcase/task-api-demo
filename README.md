@@ -13,14 +13,16 @@
 
 ## 🏗️ How It Was Built
 This project follows an **API-first** approach, where the API specification was defined first, and the code was auto-generated.
-### **1️⃣ Define OpenAPI Specification**
+
+### REST API
+
+#### **1️⃣ Define OpenAPI Specification**
 - The API was designed using **OpenAPI 3.0**.
-- The specification was created and edited using [Swagger Editor](https://editor.swagger.io/).
-- The spec was created in the **root of the project** as `task-api-spec.yaml`.
-- OpenAPI defines endpoints, request/response structures, and validation rules.
+- The spec (`task-api-spec.yaml`) defines endpoints, request/response structures, and validation rules.
+- Edited using [Swagger Editor](https://editor.swagger.io/).
 
 
-### **2️⃣ Auto-Generate Code Using OpenAPI Generator**
+#### **2️⃣ Auto-Generate Code Using OpenAPI Generator**
 
 #### **Step 1: Ensure the OpenAPI Spec Exists**
 Before running OpenAPI Generator, ensure `task-api-spec.yaml` is present in the **root directory**:
@@ -67,15 +69,61 @@ docker run --rm -v ${PWD}:/local -u $(id -u):$(id -g) openapitools/openapi-gener
 #### **Why `interfaceOnly=true`?**
 Setting `interfaceOnly=true` ensures that only **API interfaces and DTOs** are generated, allowing you to manually implement controller logic. This keeps business logic separate and prevents generated code from overwriting custom implementations.
 
-### **3️⃣ Implement Business Logic & Services**
+--------------------------------
+
+To generate code using OpenAPI:
+```sh
+PROJECT_NAME=taskapi
+PACKAGE_NAME=com.camelcase
+
+docker run --rm -v ${PWD}:/local -u $(id -u):$(id -g) openapitools/openapi-generator-cli generate \
+  -i /local/task-api-spec.yaml \
+  -g spring \
+  -o /local \
+  --additional-properties=library=spring-boot,useSpringBoot3=true,java17=true,dateLibrary=java8,interfaceOnly=true \
+  --api-package=${PACKAGE_NAME}.${PROJECT_NAME}.api \
+  --model-package=${PACKAGE_NAME}.${PROJECT_NAME}.model \
+  --group-id=${PACKAGE_NAME} \
+  --artifact-id=${PROJECT_NAME} \
+  --package-name=${PACKAGE_NAME}.${PROJECT_NAME}
+```
+👍 **Prevents `README.md` from being overwritten** using `.openapi-generator-ignore`.  
+👍 **Keeps generated interfaces separate from business logic** (`interfaceOnly=true`).  
+
+#### **3️⃣ Implement Business Logic & Services**
 - A **service layer** was added for clean separation of concerns.
 - **Mock data with Faker** was used to simulate a working API without a database.
 - **Spring Security & JWT authentication** was implemented manually.
 
-### **4️⃣ Add GraphQL Support**
+
+### GraphQL API
+
+
+#### **4️⃣ Add GraphQL Support**
 - Added GraphQL using `spring-boot-starter-graphql`.
 - Created `task.graphqls` schema for flexible queries.
 - Integrated with the same **service layer** as REST.
+
+-----
+
+#### **3️⃣ Add GraphQL Support**
+To generate the **GraphQL schema** from the existing OpenAPI spec, run:
+```sh
+docker run --rm -v $(pwd):/app -w /app -u $(id -u):$(id -g) node:22 npx openapi-to-graphql-cli ./task-api-spec.yaml \
+--save schema.graphql
+
+mv schema.graphql src/main/resources/graphql/task.graphqls
+```
+👍 **What This Command Does:**
+- Converts the **OpenAPI 3.0 specification** into a **GraphQL schema**.
+- Saves the schema to `schema.graphql`.
+- Moves it to the correct location (`src/main/resources/graphql/task.graphqls`).
+
+🛠️ **Additional Manual Steps Needed:**
+- Fine-tune the **GraphQL schema** (e.g., add custom queries/mutations if needed).
+- Implement **GraphQL resolvers** using the existing **service layer**.
+
+----------------------------
 
 ### **5️⃣ Auto-Generated vs. Manual Implementation**
 | **Feature**                  | **Auto-Generated?** | **Manual Implementation?** |

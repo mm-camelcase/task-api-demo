@@ -2,6 +2,36 @@
 
 🚀 **Task API Demo** – A fully featured **Task Management API** built with **Spring Boot**, supporting **both REST and GraphQL**.
 
+# **Table of Contents**
+1. [Task API Demo](#task-api-demo)
+2. [🔹 Features](#-features)
+3. [🏗️ How It Was Built](#-how-it-was-built)
+   - [REST API](#rest-api)
+     - [1️⃣ Define OpenAPI Specification](#1️⃣-define-openapi-specification)
+     - [2️⃣ Auto-Generate Code Using OpenAPI Generator](#2️⃣-auto-generate-code-using-openapi-generator)
+     - [3️⃣ Implement Business Logic & Services](#3️⃣-implement-business-logic--services)
+   - [GraphQL API](#graphql-api)
+     - [4️⃣ Add GraphQL Support](#4️⃣-add-graphql-support)
+4. [🔄 Auto-Generated vs. Manual Implementation](#-auto-generated-vs-manual-implementation)
+5. [🛠️ Installation & Setup](#-installation--setup)
+   - [1️⃣ Clone the Repository](#1️⃣-clone-the-repository)
+   - [2️⃣ Run the Application](#2️⃣-run-the-application)
+6. [📖 API Documentation](#-api-documentation)
+   - [1️⃣ Swagger UI](#1️⃣-swagger-ui)
+   - [2️⃣ ReDoc](#2️⃣-redoc)
+   - [3️⃣ Stoplight Elements](#3️⃣-stoplight-elements)
+   - [4️⃣ RapiDoc](#4️⃣-rapidoc)
+   - [5️⃣ GraphiQL](#5️⃣-graphiql)
+7. [How to Choose the Right API Documentation Tool?](#how-to-choose-the-right-api-documentation-tool)
+8. [🔑 Authentication & Token Retrieval](#-authentication--token-retrieval)
+   - [🔑 Demo User Credentials](#-demo-user-credentials)
+   - [Login to Get a Token](#login-to-get-a-token)
+   - [Use Token in API Requests](#use-token-in-api-requests)
+   - [Authentication in API Docs](#authentication-in-api-docs)
+9. [GraphQL Playground](#graphql-playground)
+
+
+
 ## 🔹 Features
 👉 **REST & GraphQL API** – Flexible data querying options  
 👉 **OpenAPI & Swagger UI** – Auto-generated API documentation  
@@ -10,6 +40,7 @@
 👉 **Validation & Error Handling** – Standardized request validation  
 👉 **Pagination & Filtering** – Efficient data retrieval  
 👉 **Embedded H2 Database with Spring Data JPA** – Lightweight, in-memory persistence for easy testing
+
 
 ## 🏗️ How It Was Built
 This project follows an **API-first** approach, where the API specification was defined first, and the code was auto-generated.

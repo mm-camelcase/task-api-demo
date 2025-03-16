@@ -204,6 +204,11 @@ The demo user credentials are configured in the [``application.yml``](https://gi
 
 ```sh
 curl -X POST "http://localhost:8080/auth/login?username=admin&password=password"
+
+curl -X POST http://localhost:8080/api/auth/login  \
+    -H "Content-Type: application/json"  \
+    -d '{"username": "admin", "password": "BlueSky"}'
+
 ```
 Example Response:
 ```json

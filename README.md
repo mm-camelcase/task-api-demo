@@ -28,7 +28,7 @@
    - [Login to Get a Token](#login-to-get-a-token)
    - [Use Token in API Requests](#use-token-in-api-requests)
    - [Authentication in API Docs](#authentication-in-api-docs)
-9. [How to Use GraphQL](#graphql-playground)
+9. [Using GraphQL](#using-graphql)
 
 
 
@@ -268,9 +268,9 @@ For this demo, authentication is handled using **OAuth2 Password Flow**, where u
 **📸 Screenshot:**  
 ![Swagger Auth Screenshot](./assets/images/docauth.png)
 
-## **🛠️ How to Use GraphQL**
+## **🛠️ Using GraphQL**
 
-### **2️⃣ Query: Get All Tasks**
+### **1️⃣ Query: Get All Tasks**
 ```graphql
 query {
   taskPage(page: 1, size: 5) {
@@ -288,7 +288,7 @@ query {
 
 ---
 
-### **3️⃣ Query: Get a Single Task**
+### **2️⃣ Query: Get a Single Task**
 ```graphql
 query {
   task(id: "1") {
@@ -302,7 +302,7 @@ query {
 
 ---
 
-### **4️⃣ Mutation: Create a Task**
+### **3️⃣ Mutation: Create a Task**
 ```graphql
 mutation {
   create(taskCreateRequestInput: {
@@ -321,7 +321,7 @@ mutation {
 
 ---
 
-### **5️⃣ Mutation: Update a Task**
+### **4️⃣ Mutation: Update a Task**
 ```graphql
 mutation {
   update(id: "1", taskUpdateRequestInput: {
@@ -338,7 +338,7 @@ mutation {
 
 ---
 
-### **6️⃣ Mutation: Delete a Task**
+### **5️⃣ Mutation: Delete a Task**
 ```graphql
 mutation {
   deleteTask(id: "1")

@@ -73,7 +73,7 @@ mv schema.graphql src/main/resources/graphql/task.graphqls
 
 ----------------------------
 
-### **5️⃣ Auto-Generated vs. Manual Implementation**
+### **Auto-Generated vs. Manual Implementation**
 | **Feature**                  | **Auto-Generated?** | **Manual Implementation?** |
 |------------------------------|---------------------|----------------------------|
 | **Controller interfaces**    | ✅ Yes (OpenAPI Generator) | 🔴 Need to implement methods |
@@ -97,15 +97,12 @@ cd task-api-demo
 ```
 
 ### **2️⃣ Run the Application**
+
 #### **Using Maven:**
 ```sh
 mvn spring-boot:run
 ```
-#### **Using Docker:**
-```sh
-docker build -t task-api-demo .
-docker run -p 8080:8080 task-api-demo
-```
+
 
 ## 📖 API Documentation
 This project includes **multiple API documentation tools** to provide flexibility in exploring and testing the API.
@@ -116,6 +113,7 @@ This project includes **multiple API documentation tools** to provide flexibilit
 | **ReDoc**               | Clean API Docs | ❌ No | ❌ No built-in auth | High |
 | **Stoplight Elements**  | Interactive Docs + Testing | ✅ Yes | ✅ OAuth2, Basic, API Key | High |
 | **RapiDoc**             | Customizable API Docs | ✅ Yes | ✅ OAuth2, Basic, API Key | High |
+| **GraphiQL**            | Interactive GraphQL UI | ✅ Yes | ❌ No built-in auth (manual token required) | Moderate |
 
 ---
 
@@ -157,6 +155,30 @@ This project includes **multiple API documentation tools** to provide flexibilit
 **📸 Screenshot:**  
 ![RapiDoc Screenshot](./assets/images/rapidoc.png)
 
+
+### **5️⃣ GraphiQL**
+📌 **Best for:** Exploring and testing GraphQL queries and mutations.
+🔗 **Access:** http://localhost:8080/graphiql
+✅ **Supports "Try It Out" for GraphQL queries**
+❌ No built-in authentication – you must manually add the Authorization header.
+
+🛠 How to Add Authentication:
+
+1. Open **GraphiQL** (http://localhost:8080/graphiql).
+2. Click on **"HTTP Headers"** (top-right button).
+Add the following:
+
+```json
+{
+  "Authorization": "Bearer your-jwt-token"
+}
+```
+🔹 Replace your-jwt-token with the actual token from the login API.
+
+📸 Screenshot:
+![GraphiQL Screenshot](./assets/images/graphiql.png)
+
+
 ---
 
 ## **How to Choose the Right API Documentation Tool?**
@@ -178,7 +200,6 @@ This project includes **multiple API documentation tools** to provide flexibilit
 The demo user credentials are configured in the [``application.yml``](https://github.com/mm-camelcase/task-api-demo/blob/service-impl/src/main/resources/application.yml#L21). You can find the username and password there for authentication.
 
 ### **Login to Get a Token**
-
 
 
 ```sh

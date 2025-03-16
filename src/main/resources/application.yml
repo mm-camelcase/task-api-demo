@@ -14,6 +14,7 @@ spring:
       printer:
         enabled: true
 
+
 springdoc:
   swagger-ui:
     oauth:
@@ -28,9 +29,13 @@ security:
     password: BlueSky
 
 
-logging:
-  level:
-    org.springframework.graphql: DEBUG
+# logging:
+#   level:
+#     org.springframework.graphql: DEBUG
+#     org.springframework.security: DEBUG
+
+
+# logging.level.org.springframework.security=DEBUG
 
 
 

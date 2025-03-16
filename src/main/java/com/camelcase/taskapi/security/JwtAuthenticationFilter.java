@@ -1,7 +1,5 @@
 package com.camelcase.taskapi.security;
 
-import org.springframework.stereotype.Component;
-import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,14 +8,21 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-//@Component
-public class JwtAuthenticationFilter extends OncePerRequestFilter {
+
+// Note: using jakarta.servlet.Filter interface instead of standard OncePerRequestFilter due to 
+// compatibility issues with Spring GraphQL
+// https://github.com/spring-projects/spring-graphql/issues/594
+
+
+public class JwtAuthenticationFilter implements jakarta.servlet.Filter {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
 
@@ -29,14 +34,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         this.userDetailsService = userDetailsService;
     }
 
-    @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
-            throws ServletException, IOException {
+
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
+
         final String authHeader = request.getHeader("Authorization");
 
-        // ✅ Skip filter for public endpoints
+        // Skip filter for public endpoints
         String requestPath = request.getServletPath();
-        if (requestPath.equals("/api/auth/login") || requestPath.equals("/") || requestPath.endsWith(".html") || requestPath.endsWith("favicon.ico") || requestPath.startsWith("/swagger-ui") || requestPath.startsWith("/v3/api-docs") || requestPath.startsWith("/public") || requestPath.startsWith("/graphql") || requestPath.startsWith("/graphiql")|| requestPath.startsWith("/vendor")) {
+        if (requestPath.equals("/api/auth/login") || requestPath.equals("/") || requestPath.endsWith(".html") || requestPath.endsWith("favicon.ico") || requestPath.startsWith("/swagger-ui") || requestPath.startsWith("/v3/api-docs") || requestPath.startsWith("/public") || requestPath.startsWith("/graphiql")) {
             chain.doFilter(request, response);
             return;
         }
@@ -58,7 +63,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             SecurityContextHolder.getContext().setAuthentication(
                 new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities()));
-
         } catch (ExpiredJwtException e) {
             logger.warn("JWT expired for request {}: {}", request.getRequestURI(), e.getMessage());
 
@@ -84,5 +88,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         chain.doFilter(request, response);
+    }
+
+    @Override
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        doFilterInternal((HttpServletRequest) servletRequest, (HttpServletResponse) servletResponse, filterChain);
     }
 }

@@ -216,6 +216,8 @@ Add the following:
 - **Need API testing?** → Use **Swagger UI**, **Stoplight Elements**, or **RapiDoc**.
 - **Need professional-looking static docs?** → Use **ReDoc**.
 - **Want a customizable solution?** → Use **RapiDoc** or **Stoplight Elements**.
+- **Working with GraphQL?** → Use **GraphiQL** for interactive query execution or integrate GraphQL endpoints into **Stoplight Elements**.  
+- **Need API documentation for both REST and GraphQL?** → Use a combination of **Swagger UI** (REST) and **GraphiQL** (GraphQL).  
 
 
 ---

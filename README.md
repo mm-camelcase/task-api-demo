@@ -22,13 +22,13 @@
    - [3️⃣ Stoplight Elements](#3️⃣-stoplight-elements)
    - [4️⃣ RapiDoc](#4️⃣-rapidoc)
    - [5️⃣ GraphiQL](#5️⃣-graphiql)
-7. [How to Choose the Right API Documentation Tool?](#how-to-choose-the-right-api-documentation-tool)
+7. [Choosing the Right API Documentation Tool?](#choosing-the-right-api-documentation-tool)
 8. [🔑 Authentication & Token Retrieval](#-authentication--token-retrieval)
    - [🔑 Demo User Credentials](#-demo-user-credentials)
    - [Login to Get a Token](#login-to-get-a-token)
    - [Use Token in API Requests](#use-token-in-api-requests)
    - [Authentication in API Docs](#authentication-in-api-docs)
-9. [GraphQL Playground](#graphql-playground)
+9. [How to Use GraphQL](#graphql-playground)
 
 
 
@@ -212,7 +212,7 @@ Add the following:
 
 ---
 
-## **How to Choose the Right API Documentation Tool?**
+## **Choosing the Right API Documentation Tool?**
 - **Need API testing?** → Use **Swagger UI**, **Stoplight Elements**, or **RapiDoc**.
 - **Need professional-looking static docs?** → Use **ReDoc**.
 - **Want a customizable solution?** → Use **RapiDoc** or **Stoplight Elements**.
@@ -234,8 +234,6 @@ The demo user credentials are configured in the [``application.yml``](https://gi
 
 
 ```sh
-curl -X POST "http://localhost:8080/auth/login?username=admin&password=password"
-
 curl -X POST http://localhost:8080/api/auth/login  \
     -H "Content-Type: application/json"  \
     -d '{"username": "admin", "password": "BlueSky"}'
@@ -268,31 +266,84 @@ For this demo, authentication is handled using **OAuth2 Password Flow**, where u
 
 
 **📸 Screenshot:**  
-![RapiDoc Screenshot](./assets/images/docauth.png)
+![Swagger Auth Screenshot](./assets/images/docauth.png)
 
-### **GraphQL Playground**
-Query tasks via GraphQL:
-```
-http://localhost:8080/graphiql
-```
-Example Query:
+## **🛠️ How to Use GraphQL**
+
+### **2️⃣ Query: Get All Tasks**
 ```graphql
 query {
-  getAllTasks(page: 1, size: 5) {
+  taskPage(page: 1, size: 5) {
     tasks {
       id
       title
-      status
+      taskStatus
     }
     totalPages
     totalItems
   }
 }
 ```
+👍 **Returns paginated task data.**
 
+---
 
-### TODO
+### **3️⃣ Query: Get a Single Task**
+```graphql
+query {
+  task(id: "1") {
+    id
+    title
+    taskStatus
+  }
+}
+```
+👍 **Returns a specific task by ID.**
 
-- GraphQL in swagger etc.
-- remove us english
-- remove faker refs
+---
+
+### **4️⃣ Mutation: Create a Task**
+```graphql
+mutation {
+  create(taskCreateRequestInput: {
+    title: "New Task",
+    description: "A task for testing",
+    taskStatus: PENDING,
+    dueDate: "2025-04-01"
+  }) {
+    id
+    title
+    taskStatus
+  }
+}
+```
+👍 **Creates a new task.**
+
+---
+
+### **5️⃣ Mutation: Update a Task**
+```graphql
+mutation {
+  update(id: "1", taskUpdateRequestInput: {
+    title: "Updated Task",
+    taskStatus: COMPLETED
+  }) {
+    id
+    title
+    taskStatus
+  }
+}
+```
+👍 **Updates an existing task.**
+
+---
+
+### **6️⃣ Mutation: Delete a Task**
+```graphql
+mutation {
+  deleteTask(id: "1")
+}
+```
+👍 **Deletes a task.**
+
+---

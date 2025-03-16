@@ -188,10 +188,10 @@ This project includes **multiple API documentation tools** to provide flexibilit
 
 
 ### **5️⃣ GraphiQL**
-📌 **Best for:** Exploring and testing GraphQL queries and mutations.
-🔗 **Access:** http://localhost:8080/graphiql
-✅ **Supports "Try It Out" for GraphQL queries**
-❌ No built-in authentication – you must manually add the Authorization header.
+📌 **Best for:** Exploring and testing GraphQL queries and mutations.   
+🔗 **Access:** http://localhost:8080/graphiql  
+✅ **Supports "Try It Out" for GraphQL queries**  
+❌ No built-in authentication – you must manually add the Authorization header.  
 
 🛠 How to Add Authentication:
 

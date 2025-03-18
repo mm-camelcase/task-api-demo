@@ -131,7 +131,7 @@ cd task-api-demo
 
 #### **Using Maven:**
 ```sh
-mvn spring-boot:run
+mvn clean spring-boot:run
 ```
 
 
@@ -278,6 +278,12 @@ For this demo, authentication is handled using **OAuth2 Password Flow**, where u
 ![Swagger Auth Screenshot](./assets/images/docauth.png)
 
 ## **🛠️ Using GraphQL**
+
+GraphQL is a **query language** for APIs that provides:
+- **Flexible data retrieval** (fetch only the fields you need).
+- **Efficient performance** (reduces over-fetching of data).
+- **Self-documenting schema** (introspective API structure).
+- **Single endpoint** (`/graphql`) instead of multiple REST endpoints.
 
 ### **1️⃣ Query: Get All Tasks**
 ```graphql

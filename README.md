@@ -279,7 +279,7 @@ For this demo, authentication is handled using **OAuth2 Password Flow**, where u
 
 ## **🛠️ Using GraphQL**
 
-GraphQL is a **query language** for APIs that provides:
+[GraphQL](https://graphql.org) is a **query language** for APIs that provides:
 - **Flexible data retrieval** (fetch only the fields you need).
 - **Efficient performance** (reduces over-fetching of data).
 - **Self-documenting schema** (introspective API structure).

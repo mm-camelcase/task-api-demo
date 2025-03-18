@@ -1,7 +1,6 @@
 package com.camelcase.taskapi.controller;
 
 import com.camelcase.taskapi.api.TasksApi;
-import com.camelcase.taskapi.exception.ResourceNotFoundException;
 import com.camelcase.taskapi.model.Delete200Response;
 import com.camelcase.taskapi.model.Task;
 import com.camelcase.taskapi.model.TaskCreateRequest;
@@ -14,11 +13,8 @@ import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 import java.util.Optional;
 
 

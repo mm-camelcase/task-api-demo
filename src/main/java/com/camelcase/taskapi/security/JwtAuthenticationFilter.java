@@ -21,10 +21,18 @@ import org.slf4j.LoggerFactory;
 // compatibility issues with Spring GraphQL
 // https://github.com/spring-projects/spring-graphql/issues/594
 
-
 public class JwtAuthenticationFilter implements jakarta.servlet.Filter {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
+
+    private static final String[] PUBLIC_ENDPOINTS = {
+        "/api/auth/login",
+        ".html",
+        "favicon.ico",
+        "/v3/api-docs",
+        "/public",
+        "/graphiql"
+    };
 
     private final JwtUtil jwtUtil;
     private final UserDetailsService userDetailsService;
@@ -34,25 +42,24 @@ public class JwtAuthenticationFilter implements jakarta.servlet.Filter {
         this.userDetailsService = userDetailsService;
     }
 
+    @Override
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        doFilterInternal((HttpServletRequest) servletRequest, (HttpServletResponse) servletResponse, filterChain);
+    }
+
 
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
 
         final String authHeader = request.getHeader("Authorization");
 
-        // Skip filter for public endpoints
-        String requestPath = request.getServletPath();
-        if (requestPath.equals("/api/auth/login") || requestPath.equals("/") || requestPath.endsWith(".html") || requestPath.endsWith("favicon.ico") || requestPath.startsWith("/swagger-ui") || requestPath.startsWith("/v3/api-docs") || requestPath.startsWith("/public") || requestPath.startsWith("/graphiql")) {
+        if (isPublicEndpoint(request.getServletPath())) {
             chain.doFilter(request, response);
             return;
         }
 
         //  Handle missing token
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            logger.warn("Missing or invalid Authorization header for request: {}", request.getRequestURI());
-
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.setContentType("application/json");
-            response.getWriter().write("{\"error\": \"Unauthorized\", \"message\": \"No authentication token provided.\"}");
+            handleError(response, HttpServletResponse.SC_UNAUTHORIZED, "No authentication token provided.");
             return;
         }
 
@@ -64,34 +71,33 @@ public class JwtAuthenticationFilter implements jakarta.servlet.Filter {
             SecurityContextHolder.getContext().setAuthentication(
                 new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities()));
         } catch (ExpiredJwtException e) {
-            logger.warn("JWT expired for request {}: {}", request.getRequestURI(), e.getMessage());
-
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.setContentType("application/json");
-            response.getWriter().write("{\"error\": \"Unauthorized\", \"message\": \"Your session has expired. Please log in again.\"}");
-            return;
+            handleError(response, HttpServletResponse.SC_UNAUTHORIZED, "Your session has expired. Please log in again.");
         } catch (io.jsonwebtoken.MalformedJwtException | io.jsonwebtoken.SignatureException e) {
-            // ✅ Handle corrupt tokens
-            logger.warn("Invalid JWT token for request {}: {}", request.getRequestURI(), e.getMessage());
-
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.setContentType("application/json");
-            response.getWriter().write("{\"error\": \"Unauthorized\", \"message\": \"Invalid authentication token.\"}");
-            return;
+            handleError(response, HttpServletResponse.SC_UNAUTHORIZED, "Invalid authentication token.");
         } catch (Exception e) {
-            logger.error("Unexpected authentication error for request {}: {}", request.getRequestURI(), e.getMessage());
-
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            response.setContentType("application/json");
-            response.getWriter().write("{\"error\": \"Forbidden\", \"message\": \"Access denied.\"}");
-            return;
+            handleError(response, HttpServletResponse.SC_FORBIDDEN, "Access denied.");
         }
 
         chain.doFilter(request, response);
     }
 
-    @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        doFilterInternal((HttpServletRequest) servletRequest, (HttpServletResponse) servletResponse, filterChain);
+    private boolean isPublicEndpoint(String requestPath) {
+        if ("/".equals(requestPath)) {  // Allow root path
+            return true;
+        }
+        for (String endpoint : PUBLIC_ENDPOINTS) {
+            if (requestPath.endsWith(endpoint)) {
+                return true;
+            }
+        }
+        return false;
     }
+
+    private void handleError(HttpServletResponse response, int status, String message) throws IOException {
+        logger.warn("Authentication error: {}", message);
+        response.setStatus(status);
+        response.setContentType("application/json");
+        response.getWriter().write(String.format("{\"error\": \"Unauthorized\", \"message\": \"%s\"}", message));
+    }
+    
 }

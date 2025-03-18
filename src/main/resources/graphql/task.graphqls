@@ -1,0 +1,93 @@
+type Query {
+  """
+  Retrieve details of a task by its ID.
+  
+  Equivalent to GET /tasks/{id}
+  """
+  task(id: String!): Task
+
+  """
+  Retrieve a paginated list of all tasks with optional filters.
+  
+  Equivalent to GET /tasks
+  """
+  taskPage(
+    """Pagination - page number."""
+    page: Int
+
+    """Pagination - number of tasks per page."""
+    size: Int
+
+    """Filter tasks by taskStatus."""
+    taskStatus: TaskStatus
+  ): TaskPage
+}
+
+type Task {
+  description: String
+  dueDate: String
+  id: String
+  taskStatus: TaskStatus
+  title: String
+}
+
+enum TaskStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+}
+
+type TaskPage {
+  tasks: [Task]
+  totalItems: Int
+  totalPages: Int
+}
+
+type Mutation {
+  """
+  Add a new task to the system.
+  
+  Equivalent to POST /tasks
+  """
+  create(taskCreateRequestInput: TaskCreateRequestInput!): Task
+
+  """
+  Permanently remove a task by its ID (hard delete).
+  
+  Equivalent to DELETE /tasks/{id}
+  """
+  delete(id: String!): Task2
+
+  """
+  Modify an existing task.
+  
+  Equivalent to PUT /tasks/{id}
+  """
+  update(id: String!, taskUpdateRequestInput: TaskUpdateRequestInput!): Task
+}
+
+input TaskCreateRequestInput {
+  description: String
+
+  """Due date must be a valid date in the format YYYY-MM-DD."""
+  dueDate: String!
+  taskStatus: TaskStatus!
+
+  """Title must be between 3 and 100 characters."""
+  title: String!
+}
+
+type Task2 {
+  success: Boolean
+}
+
+input TaskUpdateRequestInput {
+  description: String
+
+  """Due date must be a valid date in the format YYYY-MM-DD."""
+  dueDate: String
+  taskStatus: TaskStatus
+
+  """Title must be between 3 and 100 characters."""
+  title: String
+}

@@ -1,0 +1,15 @@
+INSERT INTO tasks (title, description, task_status, due_date) VALUES 
+('REST & GraphQL API', 'Flexible data querying options', 'PENDING', '2025-04-01'),
+('OpenAPI & Swagger UI', 'Auto-generated API documentation', 'IN_PROGRESS', '2025-04-05'),
+('JWT Authentication', 'Secure login with token-based auth', 'COMPLETED', '2025-03-20'),
+('Simulated Login', 'Test authentication easily in Swagger', 'PENDING', '2025-04-10'),
+('Validation & Error Handling', 'Standardized request validation', 'IN_PROGRESS', '2025-04-15'),
+('Mock Data with Faker', 'Realistic tasks without a database', 'COMPLETED', '2025-03-30'),
+('Pagination & Filtering', 'Efficient data retrieval', 'PENDING', '2025-04-08'),
+('Define OpenAPI Specification', 'Designing API using OpenAPI 3.0', 'IN_PROGRESS', '2025-04-12'),
+('Auto-Generate Code with OpenAPI Generator', 'Generate API code using OpenAPI spec', 'COMPLETED', '2025-03-28'),
+('Implement Business Logic', 'Add service layer for clean separation', 'PENDING', '2025-04-18'),
+('Add GraphQL Support', 'Enable GraphQL queries for flexible access', 'IN_PROGRESS', '2025-04-22'),
+('Configure API Documentation', 'Set up Swagger, ReDoc, and RapiDoc', 'COMPLETED', '2025-03-25'),
+('Setup Authentication & Authorization', 'Implement OAuth2 & JWT authentication', 'IN_PROGRESS', '2025-04-27'),
+('Enhance API Security', 'Apply proper validation & error handling', 'COMPLETED', '2025-03-15');

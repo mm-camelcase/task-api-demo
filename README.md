@@ -140,7 +140,11 @@ This project includes **multiple API documentation tools** to provide flexibilit
 
 ![API Doc Tools](./assets/images/home.png)
 <img src="./assets/images/home.png" alt="API Doc Tools" width="600">
+<p align="center">
+  <img src="./assets/images/home.png" alt="API Doc Tools" width="500">
+</p>
 
+---
 
 | **Documentation Tool**  | **Usage** | **Supports Try It Out?** | **Authentication Support** | **Customization** |
 |-------------------------|----------|-----------------|--------------------|----------------|

@@ -138,8 +138,6 @@ mvn spring-boot:run
 ## 📖 API Documentation
 This project includes **multiple API documentation tools** to provide flexibility in exploring and testing the API.
 
-![API Doc Tools](./assets/images/home.png)
-<img src="./assets/images/home.png" alt="API Doc Tools" width="600">
 <p align="center">
   <img src="./assets/images/home.png" alt="API Doc Tools" width="500">
 </p>

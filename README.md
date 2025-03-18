@@ -232,7 +232,7 @@ Add the following:
 
 ## 🔑 Authentication & Token Retrieval
 
-- For this demo, authentication is handled via a **local auth endpoint** that issues tokens using the **OAuth2 Password Flow**.
+- For this demo, authentication is handled via a **local auth endpoint** that issues tokens using the **OAuth2 Password Flow**.  
 - In a **production environment**, authentication would typically use the **Authorization Code Flow** with an external **OAuth2 provider** such as **Keycloak**, **Okta**, or **AWS Cognito**, ensuring enhanced security and proper identity federation.
 
 ## 🔑 Demo User Credentials
@@ -271,7 +271,8 @@ Most of the API documentation tools used in this project **support authenticatio
 - **Swagger UI, Stoplight Elements, and RapiDoc** support authentication via **OAuth2, Basic Auth, and API Keys**, enabling users to obtain tokens and include them in API requests.
 - **ReDoc**, however, is **view-only** and does not support interactive authentication or API testing.
 
-For this demo, authentication is handled using **OAuth2 Password Flow**, where users enter a **username and password** to receive a token. This token is then **automatically included** in API requests when testing endpoints. In a **production environment**, an **Authorization Code Flow** with an external **OAuth provider** (e.g., Keycloak, Okta) would typically be used for improved security and identity management.
+For this demo, authentication is handled using **OAuth2 Password Flow**, where users enter a **username and password** to receive a token. This token is then **automatically included** in API requests when testing endpoints.   
+In a **production environment**, an **Authorization Code Flow** with an external **OAuth provider** (e.g., Keycloak, Okta) would typically be used for improved security and identity management.
 
 
 **📸 Screenshot:**  

@@ -138,6 +138,8 @@ mvn spring-boot:run
 ## 📖 API Documentation
 This project includes **multiple API documentation tools** to provide flexibility in exploring and testing the API.
 
+![API Doc Tools](./assets/images/home.png)
+
 | **Documentation Tool**  | **Usage** | **Supports Try It Out?** | **Authentication Support** | **Customization** |
 |-------------------------|----------|-----------------|--------------------|----------------|
 | **Swagger UI**          | API testing + Docs | ✅ Yes | ✅ OAuth2, Basic, API Key | Moderate |
